@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Basic Forms</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Global Loader -->
+    <!-- <div id="global-loader" class="position-fixed w-100 h-100 d-flex justify-content-center align-items-center" style="display: none !important; z-index: 9999; background-color: rgba(255, 255, 255, 0.7);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div> -->
+
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-primary text-white py-3">
+                <i class="fas fa-tachometer-alt me-2"></i>Admin Panel
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="dashboard.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-home me-2"></i>Dashboard
+                </a>
+                <a href="forms.html" class="list-group-item list-group-item-action list-group-item-light p-3 active">
+                    <i class="fas fa-edit me-2"></i>Basic Forms
+                </a>
+                <a href="form-wizard.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-tasks me-2"></i>Form Wizard
+                </a>
+                <a href="form-repeater.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-copy me-2"></i>Form Repeater
+                </a>
+                <a href="datatable.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-table me-2"></i>DataTable
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content Wrapper -->
+        <div id="page-content-wrapper">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell me-1"></i>
+                                    <span class="badge bg-danger rounded-pill">3</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">New message received</a>
+                                    <a class="dropdown-item" href="#">System update completed</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">View all notifications</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user-circle me-1"></i> Admin User
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#"><i class="fas fa-user-cog me-1"></i> Profile</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-cog me-1"></i> Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div class="container-fluid p-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h1 class="h3 mb-0 text-gray-800">Basic Forms</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Basic Forms</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Basic Form Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Basic Form Elements</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="basic-form" class="needs-validation" novalidate>
+                            <!-- Text Input -->
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                                <div class="invalid-feedback">
+                                    Please enter your full name.
+                                </div>
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                                <div class="invalid-feedback">
+                                    Please enter a password.
+                                </div>
+                            </div>
+
+                            <!-- Select Dropdown -->
+                            <div class="mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <select class="form-select" id="country" required>
+                                    <option value="" selected disabled>Choose a country</option>
+                                    <option value="us">United States</option>
+                                    <option value="ca">Canada</option>
+                                    <option value="uk">United Kingdom</option>
+                                    <option value="au">Australia</option>
+                                    <option value="fr">France</option>
+                                    <option value="de">Germany</option>
+                                    <option value="jp">Japan</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a country.
+                                </div>
+                            </div>
+
+                            <!-- Textarea -->
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="3" placeholder="Enter your message"></textarea>
+                            </div>
+
+                            <!-- File Input -->
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Upload File</label>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>
+
+                            <!-- Radio Buttons -->
+                            <div class="mb-3">
+                                <label class="form-label d-block">Gender</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other" required>
+                                    <label class="form-check-label" for="other">Other</label>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please select a gender.
+                                </div>
+                            </div>
+
+                            <!-- Checkboxes -->
+                            <div class="mb-3">
+                                <label class="form-label d-block">Interests</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="technology" id="technology">
+                                    <label class="form-check-label" for="technology">
+                                        Technology
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="sports" id="sports">
+                                    <label class="form-check-label" for="sports">
+                                        Sports
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="music" id="music">
+                                    <label class="form-check-label" for="music">
+                                        Music
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="travel" id="travel">
+                                    <label class="form-check-label" for="travel">
+                                        Travel
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Range Input -->
+                            <div class="mb-3">
+                                <label for="customRange" class="form-label">Experience Level (1-10)</label>
+                                <input type="range" class="form-range" min="1" max="10" id="customRange">
+                            </div>
+
+                            <!-- Toggle Switch -->
+                            <div class="mb-3 form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Receive email notifications</label>
+                            </div>
+
+                            <!-- Terms Checkbox -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="terms" required>
+                                <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+                                <div class="invalid-feedback">
+                                    You must agree before submitting.
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit Form</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Inline Form Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Inline Form</h6>
+                    </div>
+                    <div class="card-body">
+                        <form class="row row-cols-lg-auto g-3 align-items-center" id="inline-form">
+                            <div class="col-12">
+                                <label class="visually-hidden" for="inlineFormInputName">Name</label>
+                                <input type="text" class="form-control" id="inlineFormInputName" placeholder="Jane Doe">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+                                <div class="input-group">
+                                    <div class="input-group-text">@</div>
+                                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                                <select class="form-select" id="inlineFormSelectPref">
+                                    <option selected>Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="inlineFormCheck">
+                                    <label class="form-check-label" for="inlineFormCheck">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Horizontal Form Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Horizontal Form</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="horizontal-form">
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="inputEmail3">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword3">
+                                </div>
+                            </div>
+                            <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="gridRadios1">
+                                            First radio
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                        <label class="form-check-label" for="gridRadios2">
+                                            Second radio
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 offset-sm-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                        <label class="form-check-label" for="gridCheck1">
+                                            Example checkbox
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert2 for notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/forms.js"></script>
+</body>
+</html>

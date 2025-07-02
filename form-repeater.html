@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Form Repeater</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+	<style>
+        /* Vertical Wizard Styles */
+        .vertical-wizard-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .wizard-steps {
+            width: 280px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .step-item:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+        
+        .step-item.active {
+            background-color: rgba(13, 110, 253, 0.1);
+        }
+        
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .step-item.active .step-circle {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .step-title {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .step-item.active .step-title {
+            color: #0d6efd;
+            font-weight: 600;
+        }
+        
+        .step-content {
+            display: none;
+            flex: 1;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        .step-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .summary-item {
+            margin-bottom: 15px;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .summary-value {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Loader -->
+    <!-- <div id="global-loader" class="position-fixed w-100 h-100 d-flex justify-content-center align-items-center" style="display: none !important; z-index: 9999; background-color: rgba(255, 255, 255, 0.7);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div> -->
+
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-primary text-white py-3">
+                <i class="fas fa-tachometer-alt me-2"></i>Admin Panel
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="dashboard.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-home me-2"></i>Dashboard
+                </a>
+                <a href="forms.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-edit me-2"></i>Basic Forms
+                </a>
+                <a href="form-wizard.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-tasks me-2"></i>Form Wizard
+                </a>
+                <a href="form-repeater.html" class="list-group-item list-group-item-action list-group-item-light p-3 active">
+                    <i class="fas fa-copy me-2"></i>Form Repeater
+                </a>
+                <a href="datatable.html" class="list-group-item list-group-item-action list-group-item-light p-3">
+                    <i class="fas fa-table me-2"></i>DataTable
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content Wrapper -->
+        <div id="page-content-wrapper">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell me-1"></i>
+                                    <span class="badge bg-danger rounded-pill">3</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">New message received</a>
+                                    <a class="dropdown-item" href="#">System update completed</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">View all notifications</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user-circle me-1"></i> Admin User
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#"><i class="fas fa-user-cog me-1"></i> Profile</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-cog me-1"></i> Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div class="container-fluid p-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h1 class="h3 mb-0 text-gray-800">Form Repeater</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Form Repeater</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Basic Repeater Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Contact Information Repeater</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="contact-repeater-form">
+                            <div class="repeater-container" id="contact-repeater">
+                                <!-- Template for repeatable item -->
+                                <div class="repeater-item mb-3 p-3 border rounded" data-index="0">
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <label for="contact-name-0" class="form-label">Contact Name</label>
+                                            <input type="text" class="form-control" id="contact-name-0" name="contacts[0][name]" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="contact-email-0" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="contact-email-0" name="contacts[0][email]" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="contact-phone-0" class="form-label">Phone</label>
+                                            <input type="tel" class="form-control" id="contact-phone-0" name="contacts[0][phone]" required>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger remove-item" data-index="0">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="button" class="btn btn-success" id="add-contact">
+                                    <i class="fas fa-plus me-1"></i> Add Contact
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i> Save Contacts
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Advanced Repeater Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Product Order Form</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="order-form">
+                            <!-- Customer Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="customer-name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer-name" name="customer_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="customer-email" class="form-label">Customer Email</label>
+                                    <input type="email" class="form-control" id="customer-email" name="customer_email" required>
+                                </div>
+                            </div>
+
+                            <h5 class="mb-3">Order Items</h5>
+                            <div class="repeater-container" id="order-repeater">
+                                <!-- Template for repeatable item -->
+                                <div class="repeater-item mb-3 p-3 border rounded" data-index="0">
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <label for="product-name-0" class="form-label">Product Name</label>
+                                            <input type="text" class="form-control" id="product-name-0" name="items[0][product]" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="product-quantity-0" class="form-label">Quantity</label>
+                                            <input type="number" class="form-control quantity-input" id="product-quantity-0" name="items[0][quantity]" min="1" value="1" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="product-price-0" class="form-label">Unit Price ($)</label>
+                                            <input type="number" class="form-control price-input" id="product-price-0" name="items[0][price]" min="0.01" step="0.01" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="product-total-0" class="form-label">Total</label>
+                                            <input type="text" class="form-control item-total" id="product-total-0" name="items[0][total]" readonly>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger remove-item" data-index="0">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-3 mb-4">
+                                <button type="button" class="btn btn-success" id="add-product">
+                                    <i class="fas fa-plus me-1"></i> Add Product
+                                </button>
+                            </div>
+
+                            <!-- Order Summary -->
+                            <div class="row justify-content-end">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Order Summary</h5>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Subtotal:</span>
+                                                <span id="order-subtotal">$0.00</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Tax (10%):</span>
+                                                <span id="order-tax">$0.00</span>
+                                            </div>
+                                            <hr>
+                                            <div class="d-flex justify-content-between fw-bold">
+                                                <span>Total:</span>
+                                                <span id="order-total">$0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-shopping-cart me-1"></i> Place Order
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Nested Repeater Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Nested Repeater (Education & Experience)</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="nested-repeater-form">
+                            <h5 class="mb-3">Education</h5>
+                            <div class="repeater-container" id="education-repeater">
+                                <!-- Template for education item -->
+                                <div class="repeater-item mb-3 p-3 border rounded" data-index="0">
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-md-5">
+                                            <label for="institution-0" class="form-label">Institution</label>
+                                            <input type="text" class="form-control" id="institution-0" name="education[0][institution]" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="degree-0" class="form-label">Degree</label>
+                                            <input type="text" class="form-control" id="degree-0" name="education[0][degree]" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="year-0" class="form-label">Year</label>
+                                            <input type="number" class="form-control" id="year-0" name="education[0][year]" min="1900" max="2099" required>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger remove-item" data-index="0">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-start mt-3 mb-4">
+                                <button type="button" class="btn btn-success" id="add-education">
+                                    <i class="fas fa-plus me-1"></i> Add Education
+                                </button>
+                            </div>
+
+                            <h5 class="mb-3">Work Experience</h5>
+                            <div class="repeater-container" id="experience-repeater">
+                                <!-- Template for experience item -->
+                                <div class="repeater-item mb-3 p-3 border rounded" data-index="0">
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-md-4">
+                                            <label for="company-0" class="form-label">Company</label>
+                                            <input type="text" class="form-control" id="company-0" name="experience[0][company]" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="position-0" class="form-label">Position</label>
+                                            <input type="text" class="form-control" id="position-0" name="experience[0][position]" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="start-year-0" class="form-label">Start Year</label>
+                                            <input type="number" class="form-control" id="start-year-0" name="experience[0][start_year]" min="1900" max="2099" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="end-year-0" class="form-label">End Year</label>
+                                            <input type="number" class="form-control" id="end-year-0" name="experience[0][end_year]" min="1900" max="2099">
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger remove-item" data-index="0">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="nested-repeater-container">
+                                        <h6 class="mb-2">Responsibilities</h6>
+                                        <div class="nested-repeater" id="responsibilities-repeater-0">
+                                            <!-- Template for nested responsibility item -->
+                                            <div class="nested-repeater-item mb-2 ps-4" data-parent-index="0" data-index="0">
+                                                <div class="row g-2">
+                                                    <div class="col-md-11">
+                                                        <input type="text" class="form-control" name="experience[0][responsibilities][0]" placeholder="Enter responsibility">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button type="button" class="btn btn-sm btn-outline-danger remove-nested-item" data-parent-index="0" data-index="0">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-success mt-2 add-nested-item" data-parent-index="0">
+                                            <i class="fas fa-plus me-1"></i> Add Responsibility
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="button" class="btn btn-success" id="add-experience">
+                                    <i class="fas fa-plus me-1"></i> Add Experience
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i> Save Profile
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+				<div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Vertical Form Wizard</h5>
+                        <p class="card-text">A step-by-step form with vertical navigation and save functionality for each step.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="vertical-wizard-container">
+                            <!-- Vertical Step Navigation -->
+                            <div class="wizard-steps">
+                                <div class="step-item active">
+                                    <div class="step-circle">1</div>
+                                    <div class="step-title">Personal Info</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-circle">2</div>
+                                    <div class="step-title">Contact Details</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-circle">3</div>
+                                    <div class="step-title">Account Setup</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-circle">4</div>
+                                    <div class="step-title">Confirmation</div>
+                                </div>
+                            </div>
+
+                            <!-- Form Steps -->
+                            <form id="wizard-form" class="flex-grow-1">
+                                <!-- Step 1: Personal Information -->
+                                <div class="step-content active">
+                                    <h4 class="mb-4">Personal Information</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" required>
+                                            <div class="invalid-feedback">Please enter your first name</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" required>
+                                            <div class="invalid-feedback">Please enter your last name</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="dob" class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" id="dob" required>
+                                            <div class="invalid-feedback">Please enter your date of birth</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="gender" class="form-label">Gender</label>
+                                            <select class="form-select" id="gender" required>
+                                                <option value="" selected disabled>Select gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select your gender</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <button type="button" class="btn btn-success save-step" data-step="1">Save</button>
+                                        <button type="button" class="btn btn-primary next-step">Next</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Contact Details -->
+                                <div class="step-content">
+                                    <h4 class="mb-4">Contact Details</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                            <div class="invalid-feedback">Please enter a valid email address</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone" required>
+                                            <div class="invalid-feedback">Please enter your phone number</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" required>
+                                        <div class="invalid-feedback">Please enter your address</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label for="city" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="city" required>
+                                            <div class="invalid-feedback">Please enter your city</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="state" class="form-label">State</label>
+                                            <select class="form-select" id="state" required>
+                                                <option value="" selected disabled>Select state</option>
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AZ">Arizona</option>
+                                                <!-- Add more states as needed -->
+                                            </select>
+                                            <div class="invalid-feedback">Please select your state</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="zip" class="form-label">ZIP Code</label>
+                                            <input type="text" class="form-control" id="zip" required>
+                                            <div class="invalid-feedback">Please enter your ZIP code</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <div>
+                                            <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                                            <button type="button" class="btn btn-success save-step" data-step="2">Save</button>
+                                        </div>
+                                        <button type="button" class="btn btn-primary next-step">Next</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Account Setup -->
+                                <div class="step-content">
+                                    <h4 class="mb-4">Account Setup</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" required>
+                                            <div class="invalid-feedback">Please enter a username</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="accountType" class="form-label">Account Type</label>
+                                            <select class="form-select" id="accountType" required>
+                                                <option value="" selected disabled>Select account type</option>
+                                                <option value="personal">Personal</option>
+                                                <option value="business">Business</option>
+                                                <option value="enterprise">Enterprise</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select an account type</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="wizardPassword" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="wizardPassword" required>
+                                            <div class="invalid-feedback">Password must be at least 6 characters</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                            <div class="invalid-feedback">Passwords do not match</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                                        <label class="form-check-label" for="termsCheck">I agree to the terms and conditions</label>
+                                        <div class="invalid-feedback">You must agree to the terms and conditions</div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <div>
+                                            <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                                            <button type="button" class="btn btn-success save-step" data-step="3">Save</button>
+                                        </div>
+                                        <button type="button" class="btn btn-primary next-step">Next</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Confirmation -->
+                                <div class="step-content">
+                                    <h4 class="mb-4">Confirmation</h4>
+                                    <p>Please review your information before submitting:</p>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="mt-4 mb-3">Personal Information</h5>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Full Name</div>
+                                                <div class="summary-value" id="summary-name"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Date of Birth</div>
+                                                <div class="summary-value" id="summary-dob"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Gender</div>
+                                                <div class="summary-value" id="summary-gender"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <h5 class="mt-4 mb-3">Contact Details</h5>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Email</div>
+                                                <div class="summary-value" id="summary-email"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Phone</div>
+                                                <div class="summary-value" id="summary-phone"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Address</div>
+                                                <div class="summary-value" id="summary-address"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="mt-4 mb-3">Account Information</h5>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Username</div>
+                                                <div class="summary-value" id="summary-username"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Account Type</div>
+                                                <div class="summary-value" id="summary-account-type"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step-actions">
+                                        <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                                        <button type="button" class="btn btn-primary" id="submit-form">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+			
+			</div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert2 for notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/form-repeater.js"></script>
+	<script src="assets/js/form-wizard.js"></script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Form Wizard - Admin Theme</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Vertical Wizard Styles */
+        .vertical-wizard-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .wizard-steps {
+            width: 280px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .step-item:hover {
+            background-color: rgba(63, 81, 181, 0.05);
+        }
+        
+        .step-item.active {
+            background-color: rgba(63, 81, 181, 0.1);
+        }
+        
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .step-item.active .step-circle {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .step-title {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .step-item.active .step-title {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .step-content {
+            display: none;
+            flex: 1;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        .step-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .summary-item {
+            margin-bottom: 15px;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .summary-value {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Theme</h3>
+                <button class="btn-toggle-sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="index.html" class="sidebar-link">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item active">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-ui-checks"></i>
+                        <span>Forms</span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li class="sidebar-subitem">
+                            <a href="form-elements.html" class="sidebar-sublink">
+                                <span>Form Elements</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="form-validation.html" class="sidebar-sublink">
+                                <span>Form Validation</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="form-repeater.html" class="sidebar-sublink">
+                                <span>Form Repeater</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-subitem active">
+                            <a href="form-wizard.html" class="sidebar-sublink">
+                                <span>Form Wizard</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="datatable.html" class="sidebar-link">
+                        <i class="bi bi-table"></i>
+                        <span>DataTable</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="charts.html" class="sidebar-link">
+                        <i class="bi bi-bar-chart"></i>
+                        <span>Charts</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-file-earmark"></i>
+                        <span>Pages</span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li class="sidebar-subitem">
+                            <a href="login.html" class="sidebar-sublink">
+                                <span>Login</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="register.html" class="sidebar-sublink">
+                                <span>Register</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="404.html" class="sidebar-sublink">
+                                <span>404 Error</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="btn-toggle-sidebar d-lg-none">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="header-search">
+                        <input type="text" placeholder="Search...">
+                        <i class="bi bi-search"></i>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="dropdown">
+                        <button class="btn-notification" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell"></i>
+                            <span class="badge bg-danger">5</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                            <li><a class="dropdown-item" href="#">Notification 1</a></li>
+                            <li><a class="dropdown-item" href="#">Notification 2</a></li>
+                            <li><a class="dropdown-item" href="#">Notification 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn-profile" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="assets/img/avatar.jpg" alt="Profile">
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>Vertical Form Wizard</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Form Wizard</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Vertical Form Wizard</h5>
+                        <p class="card-text">A step-by-step form with vertical navigation and save functionality for each step.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="vertical-wizard-container">
+                            <!-- Vertical Step Navigation -->
+                            <div class="wizard-steps">
+                                <div class="step-item active">
+                                    <div class="step-circle">1</div>
+                                    <div class="step-title">Personal Info</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-circle">2</div>
+                                    <div class="step-title">Contact Details</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-circle">3</div>
+                                    <div class="step-title">Account Setup</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-circle">4</div>
+                                    <div class="step-title">Confirmation</div>
+                                </div>
+                            </div>
+
+                            <!-- Form Steps -->
+                            <form id="wizard-form" class="flex-grow-1">
+                                <!-- Step 1: Personal Information -->
+                                <div class="step-content active">
+                                    <h4 class="mb-4">Personal Information</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" required>
+                                            <div class="invalid-feedback">Please enter your first name</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" required>
+                                            <div class="invalid-feedback">Please enter your last name</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="dob" class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" id="dob" required>
+                                            <div class="invalid-feedback">Please enter your date of birth</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="gender" class="form-label">Gender</label>
+                                            <select class="form-select" id="gender" required>
+                                                <option value="" selected disabled>Select gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select your gender</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <button type="button" class="btn btn-success save-step" data-step="1">Save</button>
+                                        <button type="button" class="btn btn-primary next-step">Next</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Contact Details -->
+                                <div class="step-content">
+                                    <h4 class="mb-4">Contact Details</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                            <div class="invalid-feedback">Please enter a valid email address</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone" required>
+                                            <div class="invalid-feedback">Please enter your phone number</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" required>
+                                        <div class="invalid-feedback">Please enter your address</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label for="city" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="city" required>
+                                            <div class="invalid-feedback">Please enter your city</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="state" class="form-label">State</label>
+                                            <select class="form-select" id="state" required>
+                                                <option value="" selected disabled>Select state</option>
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AZ">Arizona</option>
+                                                <!-- Add more states as needed -->
+                                            </select>
+                                            <div class="invalid-feedback">Please select your state</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="zip" class="form-label">ZIP Code</label>
+                                            <input type="text" class="form-control" id="zip" required>
+                                            <div class="invalid-feedback">Please enter your ZIP code</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <div>
+                                            <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                                            <button type="button" class="btn btn-success save-step" data-step="2">Save</button>
+                                        </div>
+                                        <button type="button" class="btn btn-primary next-step">Next</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Account Setup -->
+                                <div class="step-content">
+                                    <h4 class="mb-4">Account Setup</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" required>
+                                            <div class="invalid-feedback">Please enter a username</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="accountType" class="form-label">Account Type</label>
+                                            <select class="form-select" id="accountType" required>
+                                                <option value="" selected disabled>Select account type</option>
+                                                <option value="personal">Personal</option>
+                                                <option value="business">Business</option>
+                                                <option value="enterprise">Enterprise</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select an account type</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="wizardPassword" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="wizardPassword" required>
+                                            <div class="invalid-feedback">Password must be at least 6 characters</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                            <div class="invalid-feedback">Passwords do not match</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                                        <label class="form-check-label" for="termsCheck">I agree to the terms and conditions</label>
+                                        <div class="invalid-feedback">You must agree to the terms and conditions</div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <div>
+                                            <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                                            <button type="button" class="btn btn-success save-step" data-step="3">Save</button>
+                                        </div>
+                                        <button type="button" class="btn btn-primary next-step">Next</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Confirmation -->
+                                <div class="step-content">
+                                    <h4 class="mb-4">Confirmation</h4>
+                                    <p>Please review your information before submitting:</p>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="mt-4 mb-3">Personal Information</h5>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Full Name</div>
+                                                <div class="summary-value" id="summary-name"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Date of Birth</div>
+                                                <div class="summary-value" id="summary-dob"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Gender</div>
+                                                <div class="summary-value" id="summary-gender"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <h5 class="mt-4 mb-3">Contact Details</h5>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Email</div>
+                                                <div class="summary-value" id="summary-email"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Phone</div>
+                                                <div class="summary-value" id="summary-phone"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Address</div>
+                                                <div class="summary-value" id="summary-address"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="mt-4 mb-3">Account Information</h5>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Username</div>
+                                                <div class="summary-value" id="summary-username"></div>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div class="summary-label">Account Type</div>
+                                                <div class="summary-value" id="summary-account-type"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step-actions">
+                                        <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                                        <button type="button" class="btn btn-primary" id="submit-form">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div>&copy; 2023 Admin Theme. All rights reserved.</div>
+                <div>Version 1.0</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Global Loader -->
+    <div class="global-loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/form-wizard.js"></script>
+</body>
+</html>
